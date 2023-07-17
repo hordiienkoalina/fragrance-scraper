@@ -1,5 +1,6 @@
 import csv
 import requests
+import time
 from bs4 import BeautifulSoup
 
 def get_brands_and_countries(url):
@@ -45,6 +46,8 @@ brands_and_countries = get_brands_and_countries(url)
 perfumes = []
 for brand_info in brands_and_countries:
     perfumes.extend(get_perfumes(brand_info))
+    # Pauses for 1 second
+    time.sleep(1)  
 
 # Writes the brands, countries, perfumes to a CSV file
 with open('perfumes.csv', 'w', newline='') as file:
