@@ -1,4 +1,4 @@
-# Fragrance Notes Origin Map
+# Fragrance Notes: Exploratory Data Analysis
 
 ##  Install
 
