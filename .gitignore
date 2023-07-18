@@ -4,3 +4,4 @@ test-env/
 env/
 *.csv
 __pycache__/
+.DS_Store
