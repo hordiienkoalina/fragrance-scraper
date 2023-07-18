@@ -3,3 +3,4 @@ venv/
 test-env/
 env/
 *.csv
+__pycache__/

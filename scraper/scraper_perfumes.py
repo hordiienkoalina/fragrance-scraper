@@ -3,6 +3,7 @@ import requests
 import time
 from bs4 import BeautifulSoup
 
+# Scrapes countries and brands
 def get_brands_and_countries(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
