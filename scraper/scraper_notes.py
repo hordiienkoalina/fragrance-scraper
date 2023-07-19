@@ -77,7 +77,7 @@ for brand_info in brands_and_countries:
         time.sleep(1)
 
 # Writes the brands, total perfume count, notes, note count to a CSV file
-with open('../data/raw/country_notes.csv', 'w', newline='') as file:
+with open('data/raw/country_notes.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["Country", "Perfume Count", "Note", "Note Count"])
     for country, data in perfume_note_data.items():

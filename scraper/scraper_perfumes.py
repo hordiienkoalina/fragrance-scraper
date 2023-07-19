@@ -51,7 +51,7 @@ for brand_info in brands_and_countries:
     time.sleep(1)  
 
 # Writes the brands, countries, perfumes to a CSV file
-with open('../data/raw/country_perfumes.csv', 'w', newline='') as file:
+with open('data/raw/country_perfumes.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["Brand", "Country", "Perfume"])
     for row in perfumes:
