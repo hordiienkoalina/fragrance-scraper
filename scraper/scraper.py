@@ -20,22 +20,22 @@ def get_brands_and_countries(url):
             country = "Unknown"
 
         brands_and_countries.append((brand, country, brand_url))
-
+        
     return brands_and_countries
 
-# Scrape all perfumes, perfume URLs and release years of each brand
+# Scrape all perfumes of each brand
 def get_perfumes(brand_info):
     brand, country, brand_url = brand_info
     response = requests.get(brand_url)
     soup = BeautifulSoup(response.text, 'html.parser')
     perfumes = []
     
-    for div in soup.find_all('div', class_ = 'name'):
+    for div in soup.find_all('div', class_='name'):
         perfume_link = div.find('a')
         if perfume_link:
             perfume_name = perfume_link.text.strip()
             perfume_url = perfume_link.get('href', '')
-            release_year_tag = div.find('a', href = lambda x: x and "Release_Years" in x)
+            release_year_tag = div.find('a', href=lambda x: x and "Release_Years" in x)
             
             if release_year_tag:
                 release_year = release_year_tag.text.strip("()")
@@ -57,17 +57,22 @@ def get_notes(perfume_info):
     print('get_notes executed')
     return brand, brand_url, country, perfume_name, release_year, perfume_url, notes
 
-url = 'https://www.parfumo.com/Brands'
-brands_and_countries = get_brands_and_countries(url)
+start_time = time.time()
 
+base_url = 'https://www.parfumo.com/Brands/'
+letters_and_symbols = list('abcdefghijklmnopqrstuvwxyz') + ['0']
 perfume_data = []
 
-for brand_info in brands_and_countries:
-    perfumes = get_perfumes(brand_info)
-    for perfume_info in perfumes:
-        data = get_notes(perfume_info)
-        perfume_data.append(data)
-        time.sleep(1)
+for letter in letters_and_symbols:
+    url = f"{base_url}{letter}"
+    brands_and_countries = get_brands_and_countries(url)
+    
+    for brand_info in brands_and_countries:
+        perfumes = get_perfumes(brand_info)
+        for perfume_info in perfumes:
+            data = get_notes(perfume_info)
+            perfume_data.append(data)
+            time.sleep(1)
 
 # Write the data to a CSV file
 with open('data/perfume_data.csv', 'w', newline='') as file:
@@ -77,3 +82,8 @@ with open('data/perfume_data.csv', 'w', newline='') as file:
         brand, brand_url, country, perfume_name, release_year, perfume_url, notes = data
         for note in notes:
             writer.writerow([brand, brand_url, country, perfume_name, release_year, perfume_url, note])
+
+end_time = time.time()
+
+elapsed_time = end_time - start_time
+print(f"Time taken: {elapsed_time} seconds")
