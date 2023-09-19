@@ -1,4 +1,4 @@
-# Fragrance Notes: Exploratory Data Analysis
+# Fragrance Scraper
 
 ##  Install
 
