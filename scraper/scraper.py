@@ -117,7 +117,7 @@ base_url = 'https://www.parfumo.com/Brands/'
 letters_and_symbols = list('abcdefghijklmnopqrstuvwxyz') + ['0']
 
 # Initialize CSV
-with open('data/perfume_data.csv', 'w', newline='') as file:
+with open('data/perfume_data_checkpoint.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["Brand", "Brand URL", "Country", "Perfume Name", "Release Year", "Perfume URL", "Note"])
 
@@ -127,4 +127,14 @@ with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
 
 end_time = time.time()
 elapsed_time = end_time - start_time
-print(f"Time taken: {elapsed_time} seconds")
+hours, remainder = divmod(elapsed_time, 3600)
+minutes, seconds = divmod(remainder, 60)
+print(f"Time taken: {int(hours)} hours, {int(minutes)} minutes, and {int(seconds)} seconds")
+
+# Merge the checkpoint file to the final CSV
+with open('data/perfume_data.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    with open('data/perfume_data_checkpoint.csv', 'r') as checkpoint_file:
+        reader = csv.reader(checkpoint_file)
+        for row in reader:
+            writer.writerow(row)
